@@ -1,4 +1,3 @@
-
 <?php
 
 declare(strict_types=1);
@@ -117,15 +116,17 @@ return new class extends Migration
 
     public function down(): void
     {
-        foreach ([
-            'editorial_events',
-            'opportunities',
-            'article_startup',
-            'article_builder',
-            'startup_founders',
-            'startups',
-            'builders'
-        ] as $table) {
+        foreach (
+            [
+                'editorial_events',
+                'opportunities',
+                'article_startup',
+                'article_builder',
+                'startup_founders',
+                'startups',
+                'builders'
+            ] as $table
+        ) {
             Schema::dropIfExists($table);
         }
     }
