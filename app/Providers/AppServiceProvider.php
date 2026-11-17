@@ -11,6 +11,7 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,7 +20,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void {}
 
     public function boot(): void
-    {
+    {  
+         Schema::defaultStringLength(191);
         RateLimiter::for('public', fn ($r) => $r->attributes->get('builder_ssr') === true
             ? Limit::perMinute((int) config('builder.ssr_requests_per_minute'))->by('signed-public-ssr')
             : Limit::perMinute(120)->by($r->ip()));
