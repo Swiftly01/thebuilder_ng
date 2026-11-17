@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "created_at": "REPLACE_WITH_UTC_TIMESTAMP_WITHIN_24_HOURS",
+  "release": { "id": "REPLACE_WITH_RELEASE_DIRECTORY_NAME", "manifest_sha256": "REPLACE_WITH_SHA256_OF_MANIFEST_FILE" },
+  "database": { "host": "localhost", "port": "3306", "database": "REPLACE_WITH_EXACT_TARGET_DATABASE", "username": "REPLACE_WITH_EXACT_TARGET_DATABASE_USER" },
+  "database_dump": { "path": "database.sql.gz", "sha256": "REPLACE_WITH_SHA256" },
+  "uploads_archive": { "path": "uploads.tar.gz", "sha256": "REPLACE_WITH_SHA256" },
+  "restore": {
+    "verified": false,
+    "verified_by": "",
+    "verified_at": "REPLACE_WITH_UTC_RESTORE_VERIFICATION_TIMESTAMP_WITHIN_24_HOURS",
+    "database_dump_sha256": "REPLACE_WITH_THE_ACTUALLY_RESTORED_DUMP_HASH",
+    "uploads_archive_sha256": "REPLACE_WITH_THE_ACTUALLY_RESTORED_UPLOAD_ARCHIVE_HASH"
+  }
+}

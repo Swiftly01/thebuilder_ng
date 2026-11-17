@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Tests\Audit\ProductionAuditProbeTest" file="C:\Users\HELLO\Documents\Techpro Institute\The Builder\.replatform\runtime\ProductionAuditProbeTest.php" tests="2" assertions="127" errors="0" failures="0" skipped="0" time="1.866440">
+    <testcase name="test_public_routes_share_a_single_120_request_ip_budget" file="C:\Users\HELLO\Documents\Techpro Institute\The Builder\.replatform\runtime\ProductionAuditProbeTest.php" line="20" class="Tests\Audit\ProductionAuditProbeTest" classname="Tests.Audit.ProductionAuditProbeTest" assertions="122" time="1.324230"/>
+    <testcase name="test_failed_media_write_is_currently_reported_as_created" file="C:\Users\HELLO\Documents\Techpro Institute\The Builder\.replatform\runtime\ProductionAuditProbeTest.php" line="29" class="Tests\Audit\ProductionAuditProbeTest" classname="Tests.Audit.ProductionAuditProbeTest" assertions="5" time="0.542210"/>
+  </testsuite>
+</testsuites>
