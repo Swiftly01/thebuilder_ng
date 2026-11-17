@@ -1,3 +1,4 @@
+
 <?php
 
 declare(strict_types=1);
@@ -17,9 +18,13 @@ return new class extends Migration
             $t->string('classification', 64);
             $t->string('headline')->nullable();
             $t->text('biography')->nullable();
+
             foreach (['industry', 'profession', 'organisation', 'country', 'city', 'region', 'website'] as $k) {
-                $t->string($k)->nullable();
-            }$t->foreignUlid('media_id')->nullable()->constrained('media')->nullOnDelete();
+                $length = in_array($k, ['country', 'region'], true) ? 100 : 191;
+                $t->string($k, $length)->nullable();
+            }
+
+            $t->foreignUlid('media_id')->nullable()->constrained('media')->nullOnDelete();
             $t->json('achievements')->nullable();
             $t->json('social_links')->nullable();
             $t->string('status', 24)->default('draft')->index();
@@ -30,37 +35,49 @@ return new class extends Migration
             $t->timestamp('feature_until')->nullable();
             $t->timestamps();
             $t->softDeletes();
+
             $t->index(['country', 'region', 'status']);
         });
+
         Schema::create('startups', function (Blueprint $t): void {
             $t->ulid('id')->primary();
             $t->string('name');
             $t->string('slug')->unique();
             $t->string('one_liner')->nullable();
             $t->text('description')->nullable();
+
             foreach (['industry', 'stage', 'funding_stage', 'country', 'city', 'region', 'website'] as $k) {
-                $t->string($k)->nullable();
-            }$t->unsignedSmallInteger('founded_year')->nullable();
+                $length = in_array($k, ['country', 'industry'], true) ? 100 : 191;
+                $t->string($k, $length)->nullable();
+            }
+
+            $t->unsignedSmallInteger('founded_year')->nullable();
             $t->unsignedInteger('team_size')->nullable();
             $t->foreignUlid('media_id')->nullable()->constrained('media')->nullOnDelete();
             $t->string('status', 24)->default('draft')->index();
             $t->timestamps();
             $t->softDeletes();
+
             $t->index(['country', 'industry', 'status']);
         });
+
         Schema::create('startup_founders', function (Blueprint $t): void {
             $t->foreignUlid('startup_id')->constrained()->cascadeOnDelete();
             $t->foreignUlid('builder_id')->constrained()->cascadeOnDelete();
             $t->string('role')->nullable();
             $t->primary(['startup_id', 'builder_id']);
         });
+
         foreach (['article_builder' => 'builder_id', 'article_startup' => 'startup_id'] as $table => $key) {
             Schema::create($table, function (Blueprint $t) use ($key): void {
                 $t->foreignUlid('article_id')->constrained()->cascadeOnDelete();
-                $t->foreignUlid($key)->constrained($key === 'builder_id' ? 'builders' : 'startups')->cascadeOnDelete();
+                $t->foreignUlid($key)->constrained(
+                    $key === 'builder_id' ? 'builders' : 'startups'
+                )->cascadeOnDelete();
                 $t->primary(['article_id', $key]);
             });
         }
+
         Schema::create('opportunities', function (Blueprint $t): void {
             $t->ulid('id')->primary();
             $t->string('title');
@@ -80,6 +97,7 @@ return new class extends Migration
             $t->softDeletes();
             $t->index(['status', 'deadline']);
         });
+
         Schema::create('editorial_events', function (Blueprint $t): void {
             $t->ulid('id')->primary();
             $t->string('title');
@@ -99,7 +117,15 @@ return new class extends Migration
 
     public function down(): void
     {
-        foreach (['editorial_events', 'opportunities', 'article_startup', 'article_builder', 'startup_founders', 'startups', 'builders'] as $table) {
+        foreach ([
+            'editorial_events',
+            'opportunities',
+            'article_startup',
+            'article_builder',
+            'startup_founders',
+            'startups',
+            'builders'
+        ] as $table) {
             Schema::dropIfExists($table);
         }
     }
